@@ -6,7 +6,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs"/>
+        <Compile Include="src\bfile.fs" />
+        <Compile Include="src\Game\Renderer.fs" />
+        <Compile Include="src\Game\GameTypes.fs" />
+        <Compile Include="src\Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\snake.f.console\snake.f.console.fsproj" />
     </ItemGroup>
 
 </Project>
