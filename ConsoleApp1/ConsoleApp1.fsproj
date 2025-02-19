@@ -7,8 +7,9 @@
 
     <ItemGroup>
         <Compile Include="src\bfile.fs" />
-        <Compile Include="src\Game\Renderer.fs" />
         <Compile Include="src\Game\GameTypes.fs" />
+        <Compile Include="src\Game\Renderer.fs" />
+        <Compile Include="src\Game\Game.fs" />
         <Compile Include="src\Program.fs" />
     </ItemGroup>
 

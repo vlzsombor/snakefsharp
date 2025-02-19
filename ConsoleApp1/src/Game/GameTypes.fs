@@ -5,7 +5,7 @@ type GameObject = Ground | Snake | Food
 type Direction = Up | Down | Right | Left | None
 
 type GameContext = {
-    Map: (GameObject * Direction)
+    Map: (GameObject * Direction) [,]
     Direction: Direction
     Position: int * int
     Score: int
