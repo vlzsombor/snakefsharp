@@ -13,16 +13,16 @@ let rec main gameContext =
         match Console.ReadKey().Key with
         | ConsoleKey.Q -> Environment.Exit 55
         | ConsoleKey.UpArrow ->
-            main(Game.gameLoop({ gameContext with Direction = Direction.Up }))
+            main (Game.gameLoop({ gameContext with Direction = Direction.Up }))
         | ConsoleKey.DownArrow ->
-            main(Game.gameLoop({ gameContext with Direction = Direction.Down }))
+            main (Game.gameLoop({ gameContext with Direction = Direction.Down }))
         | ConsoleKey.LeftArrow ->
-            main(Game.gameLoop({ gameContext with Direction = Direction.Left }))
+            main (Game.gameLoop({ gameContext with Direction = Direction.Left }))
         | ConsoleKey.RightArrow ->
-            main(Game.gameLoop({ gameContext with Direction = Direction.Right }))
-        | _ -> main(Game.gameLoop(gameContext))
+            main (Game.gameLoop({ gameContext with Direction = Direction.Right }))
+        | _ -> main (Game.gameLoop(gameContext))
     else
-        main(Game.gameLoop(gameContext))
+        main (Game.gameLoop(gameContext))
         
 [<EntryPoint>]
 main Game.createGameContext

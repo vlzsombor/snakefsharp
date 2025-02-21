@@ -7,10 +7,7 @@
 
     <ItemGroup>
         <Compile Include="GameType.fs" />
-        
-        
-        
-        
+        <Compile Include="Game.fs" />
         <Compile Include="Program.fs"/>
     </ItemGroup>
 

@@ -6,4 +6,8 @@ type MapType = Snake | Ground | Food
 type GameObject = {
     Map: (Direction * MapType)[,]
     Direction: Direction
+    StepsLeft: int
+    Dead: bool
+    Position: int * int
+    Score: int
 }

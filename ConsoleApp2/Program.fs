@@ -1,47 +1,44 @@
 ﻿open ConsoleApp2
 open ConsoleApp2.GameType
+open System
+open Game
 
-
-let renderConsole (gameObject: GameObject) =
-    ()
-    for i = 0 to Array2D.length1 gameObject.Map - 1 do
-        for j = 0 to Array2D.length2 gameObject.Map - 1 do
-            let _, obj = gameObject.Map[i,j]
-            
+let renderMap (map : (Direction * MapType)[,], score : int, steps : int) =
+    for x = 0 to Array2D.length2 map - 1 do
+        for y = 0 to Array2D.length1 map - 1 do
+            let _,obj = map.[x, y]
             match obj with
-            | Food -> printf "f"
-            | MapType.Ground -> printf "."
-            | MapType.Snake -> printf "s"
-            
-            //printf "%a" gameObject.Map[i,j]
+            | Snake -> printf "S"
+            | Food -> printf "F"
+            | Ground -> printf "."
         printf "\n"
-let rec createFood (xBorder, yBorder, map:(Direction * MapType)[,])=
-    let r = System.Random()
-    let x:int = r.Next(xBorder)
-    let y:int = r.Next(yBorder)
-    let _, t = map[x,y]
-    if t = Snake || t = Food then
-        createFood(xBorder,yBorder, map)
+    printfn $"Score: %d{score}"
+    printfn $"Steps left: %d{steps}"
+        
+let rec main (gameContext:GameObject) =
+    if gameContext.Dead then Environment.Exit 55
+
+    Console.Clear()
+    renderMap(gameContext.Map, gameContext.Score, gameContext.StepsLeft)
+
+    
+    Threading.Thread.Sleep(200)
+    if Console.KeyAvailable then
+        match Console.ReadKey().Key with
+        | ConsoleKey.Q -> Environment.Exit 55
+        | ConsoleKey.W ->
+            main (Game.gameLoop({ gameContext with Direction = Direction.Up }))
+        | ConsoleKey.S ->
+            main (Game.gameLoop({ gameContext with Direction = Direction.Down }))
+        | ConsoleKey.A ->
+            main (Game.gameLoop({ gameContext with Direction = Direction.Left }))
+        | ConsoleKey.D ->
+            main (Game.gameLoop({ gameContext with Direction = Direction.Right }))
+        | _ -> main (Game.gameLoop(gameContext))
     else
-        (x,y)
-
-let borderX, borderY = 10, 14
-let createMap =
-    let map = Array2D.init borderX borderY (fun _ _ -> (Direction.None,GameType.Ground))
-    map[borderX/2,borderY/2] <- (None, Snake)
-    let fX, fY = createFood(borderX, borderY, map)
-    map[fX,fY] <- (None, Food)
-    map
+        main gameContext
     
-let g:GameObject =  {
-      Map = createMap
-      Direction = Direction.Up
-}
-
 [<EntryPoint>]
-let main args =
-    renderConsole g
+main Game.init
     
-    
-    0
     
