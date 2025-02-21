@@ -2,7 +2,7 @@
 open ConsoleApp2.GameType
 
 
-let renderConsol (gameObject: GameObject) =
+let renderConsole (gameObject: GameObject) =
     ()
     for i = 0 to Array2D.length1 gameObject.Map - 1 do
         for j = 0 to Array2D.length2 gameObject.Map - 1 do
@@ -15,11 +15,22 @@ let renderConsol (gameObject: GameObject) =
             
             //printf "%a" gameObject.Map[i,j]
         printf "\n"
+let rec createFood (xBorder, yBorder, map:(Direction * MapType)[,])=
+    let r = System.Random()
+    let x:int = r.Next(xBorder)
+    let y:int = r.Next(yBorder)
+    let _, t = map[x,y]
+    if t = Snake || t = Food then
+        createFood(xBorder,yBorder, map)
+    else
+        (x,y)
 
+let borderX, borderY = 10, 14
 let createMap =
-    let map = Array2D.init 18 18 (fun _ _ -> (Direction.None,GameType.Ground))
-    map[8,8] <- (None, Snake)
-    map[10,8] <- (None, Snake)
+    let map = Array2D.init borderX borderY (fun _ _ -> (Direction.None,GameType.Ground))
+    map[borderX/2,borderY/2] <- (None, Snake)
+    let fX, fY = createFood(borderX, borderY, map)
+    map[fX,fY] <- (None, Food)
     map
     
 let g:GameObject =  {
@@ -29,7 +40,8 @@ let g:GameObject =  {
 
 [<EntryPoint>]
 let main args =
+    renderConsole g
     
-    renderConsol g
+    
     0
     
